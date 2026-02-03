@@ -8,7 +8,13 @@ export default function PlacesScreen() {
     const [filter, setFilter] = useState("");
 
     if (isLoading) return <ActivityIndicator size="large" />;
-    if (error) return <Text>Error loading places</Text>;
+    if (error) {
+        return (
+            <View style={{ justifyContent: "center", alignItems: "center", padding: 16 }}>
+                <Text>Something went wrong while loading places.</Text>
+            </View>
+        );
+    }
 
     const filteredPlaces = data.filter((p) =>
         p.country.toLowerCase().includes(filter.toLowerCase())
@@ -26,6 +32,7 @@ export default function PlacesScreen() {
                 data={filteredPlaces}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (<PlaceCard place={item} />)}
+                ListEmptyComponent={<Text>No places found.</Text>}
             />
         </View>
     );
