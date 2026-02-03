@@ -1,1 +1,38 @@
-{}
+{
+    "places": [
+      {
+        "id": 1,
+        "title": "Colosseum",
+        "city": "Rome",
+        "country": "Italy",
+        "notes": "Ancient Roman amphitheater",
+        "dateVisited": "2024-08-14",
+        "imageUrl": "",
+        "latitude": 41.8902,
+        "longitude": 12.4922
+      },
+      {
+        "id": 2,
+        "title": "Eiffel Tower",
+        "city": "Paris",
+        "country": "France",
+        "notes": "Iconic landmark",
+        "dateVisited": "2023-06-10",
+        "imageUrl": "",
+        "latitude": 48.8584,
+        "longitude": 2.2945
+      },
+      {
+        "id": 3,
+        "title": "Pantheon",
+        "city": "Rome",
+        "country": "Italy",
+        "notes": "Roman temple",
+        "dateVisited": "2024-08-20",
+        "imageUrl": "",
+        "latitude": 41.8986,
+        "longitude": 12.4768
+      }
+    ]
+  }
+  
