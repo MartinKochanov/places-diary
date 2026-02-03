@@ -4,7 +4,7 @@ import { usePlaces } from "../hooks/places/usePlaces";
 import PlaceCard from "../components/PlaceCard";
 
 export default function PlacesScreen() {
-    const { data, isLoading, error } = usePlaces();
+    const { data, isLoading, error, isFetching, refetch } = usePlaces();
     const [filter, setFilter] = useState("");
 
     if (isLoading) return <ActivityIndicator size="large" />;
@@ -33,12 +33,12 @@ export default function PlacesScreen() {
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (<PlaceCard place={item} />)}
                 ListEmptyComponent={<Text>No places found.</Text>}
+                refreshing={isFetching}
+                onRefresh={refetch}
             />
         </View>
     );
 }
 
-//TODO : Add error handling and empty state UI in PlacesScreen
-//TODO: Implement pull-to-refresh functionality in PlacesScreen
 //TODO: Add pagination support in PlacesScreen for large datasets
 //TODO: Apply filter on the server side instead of client side in PlacesScreen
