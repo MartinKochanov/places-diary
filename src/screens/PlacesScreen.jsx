@@ -4,8 +4,17 @@ import { usePlaces } from "../hooks/places/usePlaces";
 import PlaceCard from "../components/PlaceCard";
 
 export default function PlacesScreen() {
-    const { data, isLoading, error, isFetching, refetch } = usePlaces();
     const [filter, setFilter] = useState("");
+    const {
+        data,
+        isLoading,
+        error,
+        isFetchingNextPage,
+        fetchNextPage,
+        hasNextPage,
+        refetch,
+        isFetching,
+    } = usePlaces();
 
     if (isLoading) return <ActivityIndicator size="large" />;
     if (error) {
@@ -16,8 +25,10 @@ export default function PlacesScreen() {
         );
     }
 
-    const filteredPlaces = data.filter((p) =>
-        p.country.toLowerCase().includes(filter.toLowerCase())
+    const places = data?.pages.flat() ?? [];
+
+    const filteredPlaces = places.filter((p) =>
+        (p.country ?? "").toLowerCase().includes(filter.toLowerCase())
     );
 
     return (
@@ -35,10 +46,18 @@ export default function PlacesScreen() {
                 ListEmptyComponent={<Text>No places found.</Text>}
                 refreshing={isFetching}
                 onRefresh={refetch}
+                onEndReached={() => {
+                    if (hasNextPage && !isFetchingNextPage) {
+                        fetchNextPage();
+                    }
+                }}
+                onEndReachedThreshold={0.5}
+                ListFooterComponent={
+                    isFetchingNextPage ? <ActivityIndicator /> : null
+                }
             />
         </View>
     );
 }
 
-//TODO: Add pagination support in PlacesScreen for large datasets
 //TODO: Apply filter on the server side instead of client side in PlacesScreen
