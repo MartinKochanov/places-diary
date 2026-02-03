@@ -10,6 +10,7 @@
     "server": "json-server --watch db.json --port 3001"
   },
   "dependencies": {
+    "@react-native-picker/picker": "^2.11.4",
     "@react-navigation/bottom-tabs": "^7.12.0",
     "@react-navigation/native": "^7.1.28",
     "@react-navigation/native-stack": "^7.12.0",

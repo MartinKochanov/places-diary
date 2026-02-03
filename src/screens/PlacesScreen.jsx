@@ -2,6 +2,7 @@ import { View, Text, FlatList, TextInput, ActivityIndicator } from "react-native
 import { useState } from "react";
 import { usePlaces } from "../hooks/places/usePlaces";
 import PlaceCard from "../components/PlaceCard";
+import CountryPicker from "../components/PlacesPicker";
 
 export default function PlacesScreen() {
     const [filter, setFilter] = useState("");
@@ -14,7 +15,7 @@ export default function PlacesScreen() {
         hasNextPage,
         refetch,
         isFetching,
-    } = usePlaces();
+    } = usePlaces(filter);
 
     if (isLoading) return <ActivityIndicator size="large" />;
     if (error) {
@@ -33,12 +34,11 @@ export default function PlacesScreen() {
 
     return (
         <View style={{ padding: 16 }}>
-            <TextInput
-                placeholder="Filter by country..."
-                value={filter}
-                onChangeText={setFilter}
-                style={{ borderWidth: 1, borderColor: "#ccc", padding: 8, marginBottom: 12 }}
+            <CountryPicker
+                selectedValue={filter}
+                onValueChange={setFilter}
             />
+
             <FlatList
                 data={filteredPlaces}
                 keyExtractor={(item) => item.id.toString()}
@@ -59,5 +59,3 @@ export default function PlacesScreen() {
         </View>
     );
 }
-
-//TODO: Apply filter on the server side instead of client side in PlacesScreen
