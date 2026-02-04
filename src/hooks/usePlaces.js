@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { getPlaces } from "../../api/placesService"
+import { getPlaces } from "../api/placesService"
 
 
 const PER_PAGE = 10;

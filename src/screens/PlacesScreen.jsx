@@ -1,6 +1,6 @@
 import { View, Text, FlatList, TextInput, ActivityIndicator } from "react-native";
 import { useState } from "react";
-import { usePlaces } from "../hooks/places/usePlaces";
+import { usePlaces } from "../hooks/usePlaces";
 import PlaceCard from "../components/PlaceCard";
 import CountryPicker from "../components/PlacesPicker";
 
@@ -28,10 +28,6 @@ export default function PlacesScreen() {
 
     const places = data?.pages.flat() ?? [];
 
-    const filteredPlaces = places.filter((p) =>
-        (p.country ?? "").toLowerCase().includes(filter.toLowerCase())
-    );
-
     return (
         <View style={{ padding: 16 }}>
             <CountryPicker
@@ -40,7 +36,7 @@ export default function PlacesScreen() {
             />
 
             <FlatList
-                data={filteredPlaces}
+                data={places}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (<PlaceCard place={item} />)}
                 ListEmptyComponent={<Text>No places found.</Text>}
