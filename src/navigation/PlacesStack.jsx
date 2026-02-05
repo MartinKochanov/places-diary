@@ -3,14 +3,13 @@ import PlacesScreen from "../screens/PlacesScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function Appnavigator() {
-
+export default function PlacesStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Places"
+                name="PlacesList"
                 component={PlacesScreen}
-                options={{ title: "Places Visited" }}
+                options={{ title: "Places" }}
             />
         </Stack.Navigator>
     );
