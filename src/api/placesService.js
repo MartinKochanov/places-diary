@@ -14,6 +14,19 @@ export const getPlaces = async (page = 1, perPage = 10, country = "") => {
     return res.data.data;
 };
 
+export const getFavouritePlaces = async (page = 1, perPage = 10, country = "") => {
+    const res = await api.get(endpoints.PLACES, {
+        params: {
+            _page: page,
+            _per_page: perPage,
+            isFavourite: true,
+            country: country,
+        },
+    });
+
+    return res.data.data;
+};
+
 export const getCountries = async () => {
     const res = await api.get(endpoints.PLACES);
     const result = res.data

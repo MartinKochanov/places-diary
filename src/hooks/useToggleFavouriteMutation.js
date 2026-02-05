@@ -32,6 +32,7 @@ export const useToggleFavouriteMutation = () => {
         onSettled: (_data, _error, variables) => {
             queryClient.invalidateQueries({ queryKey: ["place", variables.id] });
             queryClient.invalidateQueries({ queryKey: ["places"] });
+            queryClient.invalidateQueries({ queryKey: ["favPlaces"] });
         },
     });
 };

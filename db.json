@@ -10,7 +10,7 @@
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ63lcPnqY3V434VN-r0lWAo_v-FBp-O16KKA&s",
       "latitude": 41.8902,
       "longitude": 12.4922,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "2",
@@ -22,7 +22,7 @@
       "imageUrl": "https://media.architecturaldigest.com/photos/66a951edce728792a48166e6/master/pass/GettyImages-955441104.jpg",
       "latitude": 48.8584,
       "longitude": 2.2945,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "3",
@@ -34,7 +34,7 @@
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnX-fY6FJAi3QJ51RTjepjMiKhOyZkRjIpg&s",
       "latitude": 41.8986,
       "longitude": 12.4768,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "4",
