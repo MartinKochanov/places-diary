@@ -16,8 +16,12 @@ export default function MainTabs() {
                     const routeName = getFocusedRouteNameFromRoute(route) ?? "Places";
                     return {
                         title: "Places",
-                        tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="map" size={size} color={color} />
+                        tabBarIcon: ({ color, size, focused }) => (
+                            <Ionicons
+                                name="location"
+                                size={size}
+                                color={focused ? "teal" : color}
+                            />
                         ),
                         tabBarStyle: routeName === "PlaceDetails" ? { display: "none" } : {},
                     };
@@ -30,8 +34,12 @@ export default function MainTabs() {
                     const routeName = getFocusedRouteNameFromRoute(route) ?? "Favourites";
                     return {
                         title: "Favourites",
-                        tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="heart" size={size} color={color} />
+                        tabBarIcon: ({ color, size, focused }) => (
+                            <Ionicons
+                                name="heart"
+                                size={size}
+                                color={focused ? "tomato" : color}
+                            />
                         ),
                         tabBarStyle: routeName === "PlaceDetails" ? { display: "none" } : {},
                     };

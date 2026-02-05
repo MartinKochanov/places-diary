@@ -46,7 +46,7 @@
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ63lcPnqY3V434VN-r0lWAo_v-FBp-O16KKA&s",
       "latitude": 51.5007,
       "longitude": -0.1246,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "5",
@@ -58,7 +58,7 @@
       "imageUrl": "https://media.architecturaldigest.com/photos/66a951edce728792a48166e6/master/pass/GettyImages-955441104.jpg",
       "latitude": 40.6892,
       "longitude": -74.0445,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "6",
@@ -82,7 +82,7 @@
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ63lcPnqY3V434VN-r0lWAo_v-FBp-O16KKA&s",
       "latitude": -22.9519,
       "longitude": -43.2105,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "8",
@@ -286,7 +286,7 @@
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ63lcPnqY3V434VN-r0lWAo_v-FBp-O16KKA&s",
       "latitude": 43.7731,
       "longitude": 11.256,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "25",
@@ -298,7 +298,7 @@
       "imageUrl": "https://media.architecturaldigest.com/photos/66a951edce728792a48166e6/master/pass/GettyImages-955441104.jpg",
       "latitude": 40.7467,
       "longitude": 14.487,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "26",
@@ -310,7 +310,7 @@
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnX-fY6FJAi3QJ51RTjepjMiKhOyZkRjIpg&s",
       "latitude": 44.124,
       "longitude": 9.7109,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "27",
@@ -334,7 +334,7 @@
       "imageUrl": "https://media.architecturaldigest.com/photos/66a951edce728792a48166e6/master/pass/GettyImages-955441104.jpg",
       "latitude": 45.434,
       "longitude": 12.339,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "29",
@@ -382,7 +382,7 @@
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnX-fY6FJAi3QJ51RTjepjMiKhOyZkRjIpg&s",
       "latitude": 45.438,
       "longitude": 10.991,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "id": "33",
