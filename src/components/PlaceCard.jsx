@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-export default function PlaceCard({ place }) {
+function PlaceCard({ place }) {
     return (
         <View style={styles.card}>
             {place.imageUrl && (
@@ -14,6 +15,7 @@ export default function PlaceCard({ place }) {
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     card: {
@@ -37,3 +39,5 @@ const styles = StyleSheet.create({
         color: "#666",
     },
 });
+
+export default memo(PlaceCard);

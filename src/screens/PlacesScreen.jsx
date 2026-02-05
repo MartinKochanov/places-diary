@@ -1,5 +1,5 @@
 import { View, Text, FlatList, TextInput, ActivityIndicator } from "react-native";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { usePlaces } from "../hooks/usePlaces";
 import PlaceCard from "../components/PlaceCard";
 import CountryPicker from "../components/PlacesPicker";
@@ -16,6 +16,11 @@ export default function PlacesScreen() {
         refetch,
         isFetching,
     } = usePlaces(filter);
+
+    const renderItem = useCallback(
+        ({ item }) => <PlaceCard place={item} />,
+        []
+    );
 
     if (isLoading) return <ActivityIndicator size="large" />;
     if (error) {
@@ -38,7 +43,7 @@ export default function PlacesScreen() {
             <FlatList
                 data={places}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (<PlaceCard place={item} />)}
+                renderItem={renderItem}
                 ListEmptyComponent={<Text>No places found.</Text>}
                 refreshing={isFetching}
                 onRefresh={refetch}
