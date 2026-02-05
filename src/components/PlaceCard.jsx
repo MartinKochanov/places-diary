@@ -1,9 +1,17 @@
+import { useNavigation } from "@react-navigation/native";
 import { memo } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text } from "react-native";
 
 function PlaceCard({ place }) {
+
+    const navigation = useNavigation();
+
+    const onPress = () => {
+        navigation.navigate("PlaceDetails", { placeId: place.id });
+    }
+
     return (
-        <View style={styles.card}>
+        <Pressable style={styles.card} onPress={onPress}>
             {place.imageUrl && (
                 <Image
                     source={{ uri: place.imageUrl }}
@@ -12,7 +20,7 @@ function PlaceCard({ place }) {
             )}
             <Text style={styles.title}>{place.title}</Text>
             <Text style={styles.subtitle}>{place.city}, {place.country}</Text>
-        </View>
+        </Pressable>
     );
 }
 

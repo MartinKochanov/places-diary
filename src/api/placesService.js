@@ -1,9 +1,9 @@
 import api from "./api"
-import { places } from "./endpoints"
+import { endpoints } from "./endpoints"
 
 
 export const getPlaces = async (page = 1, perPage = 10, country = "") => {
-    const res = await api.get(places.GET_PLACES, {
+    const res = await api.get(endpoints.PLACES, {
         params: {
             _page: page,
             _per_page: perPage,
@@ -15,10 +15,22 @@ export const getPlaces = async (page = 1, perPage = 10, country = "") => {
 };
 
 export const getCountries = async () => {
-    const res = await api.get(places.GET_PLACES);
+    const res = await api.get(endpoints.PLACES);
     const result = res.data
 
     return Array.from(
         new Set(result.map((p) => p.country).filter(Boolean))
     );
 };
+
+export const getPlaceById = async (id) => {
+    const res = await api.get(`${endpoints.PLACES}/${id}`);
+    return res.data
+}
+
+export const toggleFavourite = async ({ id, isFavourite }) => {
+    const res = await api.patch(`${endpoints.PLACES}/${id}`, {
+        isFavourite,
+    })
+    return res.data
+}

@@ -1,3 +1,3 @@
-export const places = {
-    "GET_PLACES": "/places",
+export const endpoints = {
+    "PLACES": "/places",
 }
