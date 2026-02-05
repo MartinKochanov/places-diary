@@ -16,7 +16,7 @@ export default function PlacesStack() {
             <Stack.Screen
                 name="PlaceDetails"
                 component={PlaceDetailsScreen}
-                options={{ title: "Place Details" }}
+                options={{ title: "Place Details", }}
             />
         </Stack.Navigator>
     );
