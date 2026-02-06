@@ -34,7 +34,7 @@ export default function PlacesScreen() {
     const places = data?.pages.flat() ?? [];
 
     return (
-        <View style={{ padding: 16 }}>
+        <View style={{ padding: 16, marginBottom: 60 }}>
             <CountryPicker
                 selectedValue={filter}
                 onValueChange={setFilter}
