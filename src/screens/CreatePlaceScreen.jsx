@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     View,
     TextInput,
@@ -12,6 +12,7 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { useForm, Controller } from "react-hook-form";
+import { useDebounce } from "use-debounce";
 
 const API_KEY = process.env.EXPO_PUBLIC_LOCATIONIQ_API_KEY; // your LocationIQ token
 
@@ -19,7 +20,7 @@ export default function CreatePlaceScreen() {
     const { control, setValue, handleSubmit } = useForm();
 
     const [query, setQuery] = useState("");
-    const [debouncedQuery, setDebouncedQuery] = useState("");
+    const [debouncedQuery] = useDebounce(query, 400);
     const [results, setResults] = useState([]);
     const [region, setRegion] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -43,15 +44,6 @@ export default function CreatePlaceScreen() {
             setValue("longitude", longitude);
         })();
     }, []);
-
-    /* ---------- Debounce query ---------- */
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedQuery(query);
-        }, 400); // wait 400ms after user stops typing
-
-        return () => clearTimeout(handler);
-    }, [query]);
 
     /* ---------- Search places when debounced query changes ---------- */
     useEffect(() => {
