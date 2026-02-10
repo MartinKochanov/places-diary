@@ -26,7 +26,13 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-location", 
+      {
+        "locationAlwaysAndWhenInUsePermission": "Allow Places Diary to access your location even when the app is in the background."
+      }
+    ]
     ]
   }
 }

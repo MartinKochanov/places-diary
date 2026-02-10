@@ -47,5 +47,6 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         borderWidth: 1,
         borderColor: "#ccc",
+        width: "50%",
     },
 });

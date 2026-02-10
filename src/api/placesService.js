@@ -29,7 +29,7 @@ export const getFavouritePlaces = async (page = 1, perPage = 10, country = "") =
 
 export const getCountries = async () => {
     const res = await api.get(endpoints.PLACES);
-    const result = res.data
+    const result = res.data;
 
     return Array.from(
         new Set(result.map((p) => p.country).filter(Boolean))
@@ -38,12 +38,17 @@ export const getCountries = async () => {
 
 export const getPlaceById = async (id) => {
     const res = await api.get(`${endpoints.PLACES}/${id}`);
-    return res.data
+    return res.data;
 }
 
 export const toggleFavourite = async ({ id, isFavourite }) => {
     const res = await api.patch(`${endpoints.PLACES}/${id}`, {
         isFavourite,
     })
-    return res.data
+    return res.data;
+}
+
+export const addPlace = async (place) => {
+    const res = await api.post(endpoints.PLACES, place)
+    return res.data;
 }

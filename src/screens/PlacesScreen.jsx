@@ -1,10 +1,11 @@
-import { View, Text, FlatList, TextInput, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, TextInput, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useCallback, useState } from "react";
 import { usePlaces } from "../hooks/usePlaces";
 import PlaceCard from "../components/PlaceCard";
 import CountryPicker from "../components/PlacesPicker";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function PlacesScreen() {
+export default function PlacesScreen({ navigation }) {
     const [filter, setFilter] = useState("");
     const {
         data,
@@ -35,10 +36,15 @@ export default function PlacesScreen() {
 
     return (
         <View style={{ padding: 16, marginBottom: 60 }}>
-            <CountryPicker
-                selectedValue={filter}
-                onValueChange={setFilter}
-            />
+            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                <CountryPicker
+                    selectedValue={filter}
+                    onValueChange={setFilter}
+                />
+                <TouchableOpacity onPress={() => navigation.navigate("CreatePlace")}>
+                    <Ionicons name="add" size={24} color="black" />
+                </TouchableOpacity>
+            </View>
 
             <FlatList
                 data={places}
@@ -57,6 +63,7 @@ export default function PlacesScreen() {
                     isFetchingNextPage ? <ActivityIndicator /> : null
                 }
             />
+
         </View>
     );
 }
