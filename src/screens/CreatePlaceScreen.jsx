@@ -6,24 +6,26 @@ import {
     TouchableOpacity,
     Text,
     StyleSheet,
-    Button,
     ActivityIndicator,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDebounce } from "use-debounce";
+import { useNavigation } from "@react-navigation/native";
 
-const API_KEY = process.env.EXPO_PUBLIC_LOCATIONIQ_API_KEY; // your LocationIQ token
+const API_KEY = process.env.EXPO_PUBLIC_LOCATIONIQ_API_KEY;
 
 export default function CreatePlaceScreen() {
-    const { control, setValue, handleSubmit } = useForm();
+    const navigation = useNavigation();
+    const { setValue } = useForm();
 
     const [query, setQuery] = useState("");
     const [debouncedQuery] = useDebounce(query, 400);
     const [results, setResults] = useState([]);
     const [region, setRegion] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [selectedPlace, setSelectedPlace] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -42,10 +44,21 @@ export default function CreatePlaceScreen() {
 
             setValue("latitude", latitude);
             setValue("longitude", longitude);
+
+            // Reverse geocode to get address for current location
+            try {
+                const res = await fetch(
+                    `https://us1.locationiq.com/v1/reverse.php?key=${API_KEY}&lat=${latitude}&lon=${longitude}&format=json`
+                );
+                const data = await res.json();
+                if (data && data.display_name) {
+                    setQuery(data.display_name);
+                }
+            } catch (err) {
+            }
         })();
     }, []);
 
-    /* ---------- Search places when debounced query changes ---------- */
     useEffect(() => {
         if (debouncedQuery.length < 3) {
             setResults([]);
@@ -80,33 +93,27 @@ export default function CreatePlaceScreen() {
     const selectPlace = (item) => {
         const lat = parseFloat(item.lat);
         const lng = parseFloat(item.lon);
-
+        // Prepare place data
+        const place = {
+            title: (item.address.name || "") + " " + (item.address.city || "") + " " + (item.address.country || ""),
+            city: item.address.city || "",
+            country: item.address.country || "",
+            latitude: lat,
+            longitude: lng,
+        };
+        setSelectedPlace(place);
         setQuery(item.display_name);
-        setResults([]);
-
-        // Autofill fields
-        setValue(
-            "title",
-            item.address.name + " " + item.address.city + " " + item.address.country
-        );
-        setValue("city", item.address.city || "");
-        setValue("country", item.address.country || "");
-        setValue("latitude", lat);
-        setValue("longitude", lng);
-
+        setResults([]); // Clear suggestions after selection
         setRegion({
             latitude: lat,
             longitude: lng,
             latitudeDelta: 0.05,
             longitudeDelta: 0.05,
         });
-
-        console.log("Selected place:", item);
-
     };
 
     /* ---------- Map press override ---------- */
-    const onMapPress = (e) => {
+    const onMapPress = async (e) => {
         const { latitude, longitude } = e.nativeEvent.coordinate;
         setValue("latitude", latitude);
         setValue("longitude", longitude);
@@ -117,29 +124,48 @@ export default function CreatePlaceScreen() {
             latitudeDelta: 0.05,
             longitudeDelta: 0.05,
         });
+
+        try {
+            const res = await fetch(
+                `https://us1.locationiq.com/v1/reverse.php?key=${API_KEY}&lat=${latitude}&lon=${longitude}&format=json`
+            );
+            const data = await res.json();
+            if (data && data.display_name) {
+                setQuery(data.display_name);
+                const place = {
+                    title: (data.address?.name || "") + " " + (data.address?.city || "") + " " + (data.address?.country || ""),
+                    city: data.address?.city || "",
+                    country: data.address?.country || "",
+                    latitude,
+                    longitude,
+                };
+                setSelectedPlace(place);
+            }
+        } catch (err) {
+            // fallback: do nothing
+        }
     };
 
-    /* ---------- Submit ---------- */
-    const onSubmit = (data) => {
-        console.log("NEW PLACE:", data);
-        // TODO: call mutation to save place
+    const handleSearchChange = (text) => {
+        setQuery(text);
+        if (selectedPlace) {
+            setSelectedPlace(null);
+        }
     };
 
     return (
         <View style={styles.container}>
-            {/* Search */}
             <TextInput
                 placeholder="Search place (e.g., Eiffel Tower Paris)"
                 value={query}
-                onChangeText={setQuery}
+                onChangeText={handleSearchChange}
                 style={styles.input}
             />
 
-            {/* Loading indicator */}
             {loading && <ActivityIndicator size="small" />}
 
             {/* Suggestions */}
-            {results.length > 0 && (
+            {results.length > 0 && !selectedPlace && (
                 <FlatList
                     data={results}
                     keyExtractor={(item) => item.place_id}
@@ -156,20 +182,19 @@ export default function CreatePlaceScreen() {
             )}
 
             {/* Map */}
-            {region && (
-                <MapView style={styles.map} region={region} onPress={onMapPress}>
-                    <Marker coordinate={region} />
-                </MapView>
+            <MapView style={styles.map} region={region} onPress={onMapPress}>
+                {region && <Marker coordinate={region} />}
+            </MapView>
+
+            {/* Continue Button */}
+            {selectedPlace && (
+                <TouchableOpacity
+                    style={styles.continueBtn}
+                    onPress={() => navigation.navigate("AddDetails", { place: selectedPlace })}
+                >
+                    <Text style={styles.continueBtnText}>Continue</Text>
+                </TouchableOpacity>
             )}
-
-            {/* Hidden form fields */}
-            <Controller name="title" control={control} render={() => null} />
-            <Controller name="city" control={control} render={() => null} />
-            <Controller name="country" control={control} render={() => null} />
-            <Controller name="latitude" control={control} render={() => null} />
-            <Controller name="longitude" control={control} render={() => null} />
-
-            <Button title="Save Place" onPress={handleSubmit(onSubmit)} />
         </View>
     );
 }
@@ -199,5 +224,17 @@ const styles = StyleSheet.create({
         flex: 1,
         marginVertical: 12,
         borderRadius: 12,
+    },
+    continueBtn: {
+        backgroundColor: '#007AFF',
+        padding: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 16,
+    },
+    continueBtnText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });

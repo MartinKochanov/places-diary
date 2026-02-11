@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PlacesScreen from "../screens/PlacesScreen";
 import PlaceDetailsScreen from "../screens/PlaceDetailsScreen";
 import CreatePlaceScreen from "../screens/CreatePlaceScreen";
+import AddDetailsScreen from "../screens/AddDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,12 @@ export default function PlacesStack() {
                 name="CreatePlace"
                 component={CreatePlaceScreen}
                 options={{ title: "Create Place", }}
+            />
+
+            <Stack.Screen
+                name="AddDetails"
+                component={AddDetailsScreen}
+                options={{ title: "Add Details" }}
             />
         </Stack.Navigator>
     );
