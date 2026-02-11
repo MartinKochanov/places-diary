@@ -43,6 +43,8 @@ export default function AddDetailsScreen({ route, navigation }) {
         });
     };
 
+    //TODO: Save all the details into the database and show them in the PlaceDetailsScreen. Also, consider adding an option to edit these details later on.
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{place.title}</Text>
