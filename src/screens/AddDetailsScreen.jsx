@@ -9,6 +9,7 @@ export default function AddDetailsScreen({ route, navigation }) {
     const [imageUrl, setImageUrl] = useState("");
     const [dateVisited, setDateVisited] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
+    const [title, setTitle] = useState(place.title.trim());
 
     const pickImage = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -30,6 +31,7 @@ export default function AddDetailsScreen({ route, navigation }) {
         // Combine all data and save
         const newPlace = {
             ...place,
+            title,
             notes,
             dateVisited: dateVisited.toISOString().slice(0, 10),
             imageUrl,
@@ -47,7 +49,13 @@ export default function AddDetailsScreen({ route, navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{place.title}</Text>
+            <Text style={styles.label}>Title</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Place title"
+                value={title}
+                onChangeText={setTitle}
+            />
             <Text style={styles.label}>Notes</Text>
             <TextInput
                 style={styles.input}
