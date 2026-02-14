@@ -2,8 +2,8 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, ActivityIn
 import MapView, { Marker } from "react-native-maps";
 import { useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { usePlace } from "../hooks/usePlace";
-import { useToggleFavouriteMutation } from "../hooks/useToggleFavouriteMutation";
+import { usePlace } from "../hooks/places/usePlace";
+import { useToggleFavouriteMutation } from "../hooks/places/useToggleFavouriteMutation";
 
 export default function PlaceDetailsScreen() {
     const { params } = useRoute();

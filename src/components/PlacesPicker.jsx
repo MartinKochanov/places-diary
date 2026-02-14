@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker"
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { useCountries } from "../hooks/useCountries";
+import { useCountries } from "../hooks/places/useCountries";
 
 export default function CountryPicker({ selectedValue, onValueChange }) {
 

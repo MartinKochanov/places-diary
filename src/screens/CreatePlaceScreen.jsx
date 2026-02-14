@@ -1,110 +1,54 @@
 import { useEffect, useState } from "react";
 import {
     View,
+    Text,
     TextInput,
     FlatList,
     TouchableOpacity,
-    Text,
     StyleSheet,
     ActivityIndicator,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
-import { useForm } from "react-hook-form";
-import { useDebounce } from "use-debounce";
 import { useNavigation } from "@react-navigation/native";
 
-const API_KEY = process.env.EXPO_PUBLIC_LOCATIONIQ_API_KEY;
+import { reverseGeocode } from "../api/locationService";
+import { useCurrentLocation } from "../hooks/locatoin/useCurrentLocation";
+import { usePlaceSearch } from "../hooks/locatoin/usePlacesSreach";
 
 export default function CreatePlaceScreen() {
     const navigation = useNavigation();
-    const { setValue } = useForm();
 
     const [query, setQuery] = useState("");
-    const [debouncedQuery] = useDebounce(query, 400);
-    const [results, setResults] = useState([]);
-    const [region, setRegion] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [selectedPlace, setSelectedPlace] = useState(null);
 
-    useEffect(() => {
-        (async () => {
-            const { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== "granted") return;
-
-            const loc = await Location.getCurrentPositionAsync({});
-            const { latitude, longitude } = loc.coords;
-
-            setRegion({
-                latitude,
-                longitude,
-                latitudeDelta: 0.05,
-                longitudeDelta: 0.05,
-            });
-
-            setValue("latitude", latitude);
-            setValue("longitude", longitude);
-
-            try {
-                const res = await fetch(
-                    `https://us1.locationiq.com/v1/reverse.php?key=${API_KEY}&lat=${latitude}&lon=${longitude}&format=json`
-                );
-                const data = await res.json();
-                if (data && data.display_name) {
-                    setQuery(data.display_name);
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        })();
-    }, []);
+    const { region, setRegion, initialQuery } = useCurrentLocation();
+    const { results, loading, setResults } = usePlaceSearch(query);
 
     useEffect(() => {
-        if (debouncedQuery.length < 3) {
-            setResults([]);
-            return;
+        if (initialQuery) {
+            setQuery(initialQuery);
         }
-
-        const fetchPlaces = async () => {
-            setLoading(true);
-            try {
-                const res = await fetch(
-                    `https://api.locationiq.com/v1/autocomplete.php?key=${API_KEY}&q=${encodeURIComponent(
-                        debouncedQuery
-                    )}&format=json`
-                );
-                const data = await res.json();
-                // Deduplicate by place_id
-                const uniqueData = Array.from(
-                    new Map(data.map((item) => [item.place_id, item])).values()
-                );
-                setResults(uniqueData);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPlaces();
-    }, [debouncedQuery]);
+    }, [initialQuery]);
 
     const selectPlace = (item) => {
-        const lat = parseFloat(item.lat);
-        const lng = parseFloat(item.lon);
+        const latitude = parseFloat(item.lat);
+        const longitude = parseFloat(item.lon);
+
         const place = {
-            title: item.address.name || "",
-            city: item.address.city || "",
-            country: item.address.country || "",
-            latitude: lat,
-            longitude: lng,
+            title: item.address?.name || "",
+            city: item.address?.city || "",
+            country: item.address?.country || "",
+            latitude,
+            longitude,
         };
+
         setSelectedPlace(place);
         setQuery(item.display_name);
-        setResults([]); // Clear suggestions after selection
+        setResults([]);
+
         setRegion({
-            latitude: lat,
-            longitude: lng,
+            latitude,
+            longitude,
             latitudeDelta: 0.05,
             longitudeDelta: 0.05,
         });
@@ -112,8 +56,6 @@ export default function CreatePlaceScreen() {
 
     const onMapPress = async (e) => {
         const { latitude, longitude } = e.nativeEvent.coordinate;
-        setValue("latitude", latitude);
-        setValue("longitude", longitude);
 
         setRegion({
             latitude,
@@ -123,20 +65,23 @@ export default function CreatePlaceScreen() {
         });
 
         try {
-            const res = await fetch(
-                `https://us1.locationiq.com/v1/reverse.php?key=${API_KEY}&lat=${latitude}&lon=${longitude}&format=json`
-            );
-            const data = await res.json();
-            if (data && data.display_name) {
+            const data = await reverseGeocode(latitude, longitude);
+
+            if (data?.display_name) {
                 setQuery(data.display_name);
-                const place = {
-                    title: (data.address?.name || "") + " " + (data.address?.city || "") + " " + (data.address?.country || ""),
+
+                setSelectedPlace({
+                    title:
+                        (data.address?.name || "") +
+                        " " +
+                        (data.address?.city || "") +
+                        " " +
+                        (data.address?.country || ""),
                     city: data.address?.city || "",
                     country: data.address?.country || "",
                     latitude,
                     longitude,
-                };
-                setSelectedPlace(place);
+                });
             }
         } catch (err) {
             console.error(err);
@@ -145,9 +90,7 @@ export default function CreatePlaceScreen() {
 
     const handleSearchChange = (text) => {
         setQuery(text);
-        if (selectedPlace) {
-            setSelectedPlace(null);
-        }
+        if (selectedPlace) setSelectedPlace(null);
     };
 
     return (
@@ -184,7 +127,9 @@ export default function CreatePlaceScreen() {
             {selectedPlace && (
                 <TouchableOpacity
                     style={styles.continueBtn}
-                    onPress={() => navigation.navigate("AddDetails", { place: selectedPlace })}
+                    onPress={() =>
+                        navigation.navigate("AddDetails", { place: selectedPlace })
+                    }
                 >
                     <Text style={styles.continueBtnText}>Continue</Text>
                 </TouchableOpacity>

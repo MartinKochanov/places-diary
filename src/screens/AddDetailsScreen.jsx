@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useCreatePlaceMutation } from "../hooks/useCreatePlaceMutation";
+import { useCreatePlaceMutation } from "../hooks/places/useCreatePlaceMutation";
 
 export default function AddDetailsScreen({ route, navigation }) {
     const { place } = route.params;

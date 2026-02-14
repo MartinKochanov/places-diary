@@ -1,14 +1,14 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { getPlaces } from "../api/placesService"
+import { getFavouritePlaces } from "../../api/placesService"
 
 
 const PER_PAGE = 10;
 
-export const usePlaces = (country) => {
+export const useFavouritePlaces = (country) => {
     return useInfiniteQuery({
-        queryKey: ["places", country],
+        queryKey: ["favPlaces", country],
         queryFn: ({ pageParam = 1 }) =>
-            getPlaces(pageParam, PER_PAGE, country),
+            getFavouritePlaces(pageParam, PER_PAGE, country),
 
         getNextPageParam: (lastPage, allPages) => {
             if (lastPage.length < PER_PAGE) return undefined;

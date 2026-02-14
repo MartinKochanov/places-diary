@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { toggleFavourite } from "../api/placesService"
+import { toggleFavourite } from "../../api/placesService"
 
 export const useToggleFavouriteMutation = () => {
 

@@ -2,7 +2,7 @@ import { View, Text, FlatList, TextInput, ActivityIndicator } from "react-native
 import { useCallback, useState } from "react";
 import PlaceCard from "../components/PlaceCard";
 import CountryPicker from "../components/PlacesPicker";
-import { useFavouritePlaces } from "../hooks/useFavouritePlaces";
+import { useFavouritePlaces } from "../hooks/places/useFavouritePlaces";
 
 export default function FavouritePlacesScreen() {
     const [filter, setFilter] = useState("");
