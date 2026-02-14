@@ -45,7 +45,6 @@ export default function CreatePlaceScreen() {
             setValue("latitude", latitude);
             setValue("longitude", longitude);
 
-            // Reverse geocode to get address for current location
             try {
                 const res = await fetch(
                     `https://us1.locationiq.com/v1/reverse.php?key=${API_KEY}&lat=${latitude}&lon=${longitude}&format=json`
@@ -55,6 +54,7 @@ export default function CreatePlaceScreen() {
                     setQuery(data.display_name);
                 }
             } catch (err) {
+                console.error(err);
             }
         })();
     }, []);
@@ -89,13 +89,11 @@ export default function CreatePlaceScreen() {
         fetchPlaces();
     }, [debouncedQuery]);
 
-    /* ---------- Select a suggestion ---------- */
     const selectPlace = (item) => {
         const lat = parseFloat(item.lat);
         const lng = parseFloat(item.lon);
-        // Prepare place data
         const place = {
-            title: (item.address.name || "") + " " + (item.address.city || "") + " " + (item.address.country || ""),
+            title: item.address.name || "",
             city: item.address.city || "",
             country: item.address.country || "",
             latitude: lat,
@@ -112,7 +110,6 @@ export default function CreatePlaceScreen() {
         });
     };
 
-    /* ---------- Map press override ---------- */
     const onMapPress = async (e) => {
         const { latitude, longitude } = e.nativeEvent.coordinate;
         setValue("latitude", latitude);
@@ -142,7 +139,7 @@ export default function CreatePlaceScreen() {
                 setSelectedPlace(place);
             }
         } catch (err) {
-            // fallback: do nothing
+            console.error(err);
         }
     };
 
@@ -164,7 +161,6 @@ export default function CreatePlaceScreen() {
 
             {loading && <ActivityIndicator size="small" />}
 
-            {/* Suggestions */}
             {results.length > 0 && !selectedPlace && (
                 <FlatList
                     data={results}
@@ -181,12 +177,10 @@ export default function CreatePlaceScreen() {
                 />
             )}
 
-            {/* Map */}
             <MapView style={styles.map} region={region} onPress={onMapPress}>
                 {region && <Marker coordinate={region} />}
             </MapView>
 
-            {/* Continue Button */}
             {selectedPlace && (
                 <TouchableOpacity
                     style={styles.continueBtn}
@@ -226,7 +220,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
     continueBtn: {
-        backgroundColor: '#007AFF',
+        backgroundColor: 'teal',
         padding: 16,
         borderRadius: 8,
         alignItems: 'center',

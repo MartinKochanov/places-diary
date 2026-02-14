@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     map: {
-        height: 250,
+        height: 350,
         margin: 16,
         borderRadius: 12,
     },

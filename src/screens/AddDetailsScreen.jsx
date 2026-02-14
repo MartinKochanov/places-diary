@@ -1,15 +1,33 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useState } from "react";
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    Image,
+    TouchableOpacity,
+    ActivityIndicator,
+    ScrollView
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { useCreatePlaceMutation } from "../hooks/useCreatePlaceMutation";
 
 export default function AddDetailsScreen({ route, navigation }) {
     const { place } = route.params;
+
+    const [title, setTitle] = useState(place.title.trim());
     const [notes, setNotes] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [dateVisited, setDateVisited] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [title, setTitle] = useState(place.title.trim());
+
+    const [errors, setErrors] = useState({});
+
+    const {
+        mutateAsync: createPlace,
+        isPending
+    } = useCreatePlaceMutation();
 
     const pickImage = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -17,18 +35,44 @@ export default function AddDetailsScreen({ route, navigation }) {
             alert("Permission to access photos is required!");
             return;
         }
-        let result = await ImagePicker.launchImageLibraryAsync({
+
+        const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images"],
-            allowsMultipleSelection: false,
             quality: 0.7,
         });
-        if (!result.canceled && result.assets && result.assets[0]?.uri) {
+
+        if (!result.canceled && result.assets?.[0]?.uri) {
             setImageUrl(result.assets[0].uri);
         }
     };
 
-    const handleSave = () => {
-        // Combine all data and save
+    const validate = () => {
+        const newErrors = {};
+        const today = new Date();
+
+        if (!title || title.length < 1 || title.length > 50) {
+            newErrors.title = "Title must be between 1 and 50 characters";
+        }
+
+        if (!notes.trim()) {
+            newErrors.notes = "Description is required";
+        }
+
+        if (dateVisited > today) {
+            newErrors.dateVisited = "Date cannot be in the future";
+        }
+
+        if (!imageUrl) {
+            newErrors.imageUrl = "Photo is required";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSave = async () => {
+        if (!validate()) return;
+
         const newPlace = {
             ...place,
             title,
@@ -37,64 +81,84 @@ export default function AddDetailsScreen({ route, navigation }) {
             imageUrl,
             isFavourite: false,
         };
-        // TODO: Save newPlace (call API or local storage)
-        console.log("SAVED PLACE:", newPlace);
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'PlacesList' }],
-        });
+
+        try {
+            await createPlace(newPlace);
+
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "PlacesList" }],
+            });
+        } catch (err) {
+            console.error("Create place failed", err);
+        }
     };
 
-    //TODO: Save all the details into the database and show them in the PlaceDetailsScreen. Also, consider adding an option to edit these details later on.
-
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Text style={styles.label}>Title</Text>
             <TextInput
-                style={styles.input}
-                placeholder="Place title"
+                style={[styles.input, errors.title && styles.inputError]}
                 value={title}
                 onChangeText={setTitle}
             />
+            {errors.title && <Text style={styles.error}>{errors.title}</Text>}
+
             <Text style={styles.label}>Notes</Text>
             <TextInput
-                style={styles.input}
-                placeholder="Add your notes..."
+                style={[styles.input, styles.notesInput, errors.notes && styles.inputError]}
                 value={notes}
                 onChangeText={setNotes}
                 multiline
             />
+            {errors.notes && <Text style={styles.error}>{errors.notes}</Text>}
+
             <Text style={styles.label}>Date Visited</Text>
             <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateBtn}>
-                <Text style={styles.dateBtnText}>{dateVisited.toISOString().slice(0, 10)}</Text>
+                <Text>{dateVisited.toISOString().slice(0, 10)}</Text>
             </TouchableOpacity>
+            {errors.dateVisited && <Text style={styles.error}>{errors.dateVisited}</Text>}
+
             {showDatePicker && (
                 <DateTimePicker
                     value={dateVisited}
                     mode="date"
                     display="default"
-                    onChange={(event, selectedDate) => {
+                    maximumDate={new Date()}
+                    onChange={(e, selectedDate) => {
                         setShowDatePicker(false);
                         if (selectedDate) setDateVisited(selectedDate);
                     }}
                 />
             )}
+
             <Text style={styles.label}>Photo</Text>
             <View style={styles.photosRow}>
-                {imageUrl ? (
-                    <Image source={{ uri: imageUrl }} style={styles.photo} />
-                ) : null}
+                {imageUrl && <Image source={{ uri: imageUrl }} style={styles.photo} />}
                 <TouchableOpacity onPress={pickImage} style={styles.addPhotoBtn}>
                     <Text style={styles.addPhotoText}>+</Text>
                 </TouchableOpacity>
+                {errors.imageUrl && <Text style={styles.error}>{errors.imageUrl}</Text>}
             </View>
-            <Button title="Save Place" onPress={handleSave} />
-        </View>
+
+            <TouchableOpacity
+                onPress={handleSave}
+                disabled={isPending}
+                style={[styles.saveButton, isPending && styles.disabledBtn]}
+            >
+                {isPending ? (
+                    <ActivityIndicator color="#fff" />
+                ) : (
+                    <Text style={styles.saveButtonText}>Save Place</Text>
+                )}
+            </TouchableOpacity>
+        </ScrollView>
     );
 }
 
+
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16 },
+    container: { flex: 1, paddingHorizontal: 16 },
     title: { fontSize: 20, fontWeight: "bold", marginBottom: 16 },
     label: { fontWeight: "bold", marginTop: 16 },
     input: {
@@ -103,6 +167,10 @@ const styles = StyleSheet.create({
         padding: 10,
         minHeight: 60,
         marginTop: 8,
+    },
+    notesInput: {
+        height: 270,
+        textAlignVertical: 'top',
     },
     photosRow: {
         flexDirection: "row",
@@ -142,5 +210,27 @@ const styles = StyleSheet.create({
     dateBtnText: {
         fontSize: 16,
         color: '#333',
+    },
+    saveButton: {
+        backgroundColor: 'teal',
+        padding: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 16,
+    },
+    saveButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    inputError: {
+        borderColor: "red",
+    },
+    error: {
+        color: "red",
+        marginTop: 4,
+    },
+    disabledBtn: {
+        opacity: 0.6,
     },
 });

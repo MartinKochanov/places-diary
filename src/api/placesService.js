@@ -3,7 +3,7 @@ import { endpoints } from "./endpoints"
 
 
 export const getPlaces = async (page = 1, perPage = 10, country = "") => {
-    const res = await api.get(endpoints.PLACES, {
+    const res = await api.get(`${endpoints.PLACES}?_sort=-dateVisited,-id`, {
         params: {
             _page: page,
             _per_page: perPage,
@@ -15,7 +15,7 @@ export const getPlaces = async (page = 1, perPage = 10, country = "") => {
 };
 
 export const getFavouritePlaces = async (page = 1, perPage = 10, country = "") => {
-    const res = await api.get(endpoints.PLACES, {
+    const res = await api.get(`${endpoints.PLACES}?_sort=-dateVisited,-id`, {
         params: {
             _page: page,
             _per_page: perPage,
