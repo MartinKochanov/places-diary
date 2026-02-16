@@ -12,13 +12,13 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useCreatePlaceMutation } from "../hooks/places/useCreatePlaceMutation";
+import { useImagePicker } from "../hooks/image/useImagePicker";
 
 export default function AddDetailsScreen({ route, navigation }) {
     const { place } = route.params;
 
     const [title, setTitle] = useState(place.title.trim());
     const [notes, setNotes] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
     const [dateVisited, setDateVisited] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -29,31 +29,7 @@ export default function AddDetailsScreen({ route, navigation }) {
         isPending
     } = useCreatePlaceMutation();
 
-    const pickImage = async () => {
-        const permission =
-            await ImagePicker.getMediaLibraryPermissionsAsync();
-
-        if (!permission.granted) {
-            const { status } =
-                await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-            if (status !== "granted") {
-                alert(
-                    "Please enable photo access in Settings to add images."
-                );
-                return;
-            }
-        }
-
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ["images"],
-            quality: 0.7,
-        });
-
-        if (!result.canceled && result.assets?.[0]?.uri) {
-            setImageUrl(result.assets[0].uri);
-        }
-    };
+    const { imageUrl, pickImage } = useImagePicker();
 
     const validate = () => {
         const newErrors = {};
