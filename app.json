@@ -13,14 +13,25 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.martin.placesdiary",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "The app needs your location to mark places you have visited on the map.",
+        "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you add images of your visited places."
+      }
     },
     "android": {
+      "package": "com.martin.placesdiary",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -30,15 +41,15 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
+          "photosPermission": "The app accesses your photos to let you add images of your visited places."
         }
       ],
       [
-        "expo-location", 
-      {
-        "locationWhenInUsePermission": "The app accesses your location to let you share it with your friends."
-      }
-    ]
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "The app needs your location to mark places you have visited on the map."
+        }
+      ]
     ]
   }
 }

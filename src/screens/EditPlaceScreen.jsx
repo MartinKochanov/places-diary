@@ -34,12 +34,19 @@ export default function EditPlaceScreen() {
         useEditPlaceMutation();
 
     const pickImage = async () => {
-        const { status } =
-            await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const permission =
+            await ImagePicker.getMediaLibraryPermissionsAsync();
 
-        if (status !== "granted") {
-            alert("Permission to access photos is required!");
-            return;
+        if (!permission.granted) {
+            const { status } =
+                await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+            if (status !== "granted") {
+                alert(
+                    "Please enable photo access in Settings to add images."
+                );
+                return;
+            }
         }
 
         const result = await ImagePicker.launchImageLibraryAsync({
