@@ -5,7 +5,7 @@
       "title": "Colosseum",
       "city": "Rome",
       "country": "Italy",
-      "notes": "Ancient Roman amphitheater",
+      "notes": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       "dateVisited": "2024-08-14",
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ63lcPnqY3V434VN-r0lWAo_v-FBp-O16KKA&s",
       "latitude": 41.8902,
@@ -22,18 +22,6 @@
       "imageUrl": "https://media.architecturaldigest.com/photos/66a951edce728792a48166e6/master/pass/GettyImages-955441104.jpg",
       "latitude": 48.8584,
       "longitude": 2.2945,
-      "isFavourite": true
-    },
-    {
-      "id": "3",
-      "title": "Pantheon",
-      "city": "Rome",
-      "country": "Italy",
-      "notes": "Roman temple",
-      "dateVisited": "2024-08-20",
-      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnX-fY6FJAi3QJ51RTjepjMiKhOyZkRjIpg&s",
-      "latitude": 41.8986,
-      "longitude": 12.4768,
       "isFavourite": true
     },
     {
@@ -59,18 +47,6 @@
       "latitude": 40.6892,
       "longitude": -74.0445,
       "isFavourite": true
-    },
-    {
-      "id": "6",
-      "title": "Sydney Opera House",
-      "city": "Sydney",
-      "country": "Australia",
-      "notes": "Iconic performing arts center",
-      "dateVisited": "2024-01-05",
-      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnX-fY6FJAi3QJ51RTjepjMiKhOyZkRjIpg&s",
-      "latitude": -33.8568,
-      "longitude": 151.2153,
-      "isFavourite": false
     },
     {
       "id": "7",
@@ -238,18 +214,6 @@
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnX-fY6FJAi3QJ51RTjepjMiKhOyZkRjIpg&s",
       "latitude": 45.4408,
       "longitude": 12.3155,
-      "isFavourite": false
-    },
-    {
-      "id": "21",
-      "title": "Notre Dame",
-      "city": "Paris",
-      "country": "France",
-      "notes": "Famous cathedral",
-      "dateVisited": "2024-07-15",
-      "imageUrl": "https://media.architecturaldigest.com/photos/66a951edce728792a48166e6/master/pass/GettyImages-955441104.jpg",
-      "latitude": 48.8529,
-      "longitude": 2.35,
       "isFavourite": false
     },
     {

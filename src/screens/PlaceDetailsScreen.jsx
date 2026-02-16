@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
     locationRow: {
         flexDirection: "row",
         justifyContent: "space-between",
+        paddingRight: 20,
     },
     actionsContainer: {
         flexDirection: "row",
