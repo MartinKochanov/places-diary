@@ -3,6 +3,7 @@ import PlacesScreen from "../screens/PlacesScreen";
 import PlaceDetailsScreen from "../screens/PlaceDetailsScreen";
 import CreatePlaceScreen from "../screens/CreatePlaceScreen";
 import AddDetailsScreen from "../screens/AddDetailsScreen";
+import EditPlaceScreen from "../screens/EditPlaceScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,13 @@ export default function PlacesStack() {
                 component={AddDetailsScreen}
                 options={{ title: "Add Details" }}
             />
+
+            <Stack.Screen
+                name="EditPlace"
+                component={EditPlaceScreen}
+                options={{ title: "Edit Place" }}
+            />
+
         </Stack.Navigator>
     );
 }

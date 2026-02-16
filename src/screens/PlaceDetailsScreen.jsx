@@ -31,6 +31,10 @@ export default function PlaceDetailsScreen() {
         });
     };
 
+    const handleEdit = () => {
+        navigation.navigate("EditPlace", { place });
+    };
+
     const handleDelete = () => {
         Alert.alert(
             "Delete place",
@@ -68,7 +72,7 @@ export default function PlaceDetailsScreen() {
                         />
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleEdit}>
                         <Ionicons name="create-outline" size={26} color="#333" />
                     </TouchableOpacity>
 

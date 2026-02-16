@@ -53,6 +53,11 @@ export const addPlace = async (place) => {
     return res.data;
 }
 
+export const editPlace = async (id, data) => {
+    const res = await api.patch(`${endpoints.PLACES}/${id}`, data)
+    return res.data
+}
+
 export const deletePlace = async (id) => {
     const res = await api.delete(`${endpoints.PLACES}/${id}`)
 
