@@ -2,6 +2,11 @@ import api from "./api"
 import { endpoints } from "./endpoints"
 
 
+export const addPlace = async (place) => {
+    const res = await api.post(endpoints.PLACES, place)
+    return res.data;
+}
+
 export const getPlaces = async (page = 1, perPage = 10, country = "") => {
     const res = await api.get(`${endpoints.PLACES}?_sort=-dateVisited,-id`, {
         params: {
@@ -41,21 +46,16 @@ export const getPlaceById = async (id) => {
     return res.data;
 }
 
+export const editPlace = async (id, data) => {
+    const res = await api.patch(`${endpoints.PLACES}/${id}`, data)
+    return res.data
+}
+
 export const toggleFavourite = async ({ id, isFavourite }) => {
     const res = await api.patch(`${endpoints.PLACES}/${id}`, {
         isFavourite,
     })
     return res.data;
-}
-
-export const addPlace = async (place) => {
-    const res = await api.post(endpoints.PLACES, place)
-    return res.data;
-}
-
-export const editPlace = async (id, data) => {
-    const res = await api.patch(`${endpoints.PLACES}/${id}`, data)
-    return res.data
 }
 
 export const deletePlace = async (id) => {
