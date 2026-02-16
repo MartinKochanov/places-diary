@@ -52,3 +52,9 @@ export const addPlace = async (place) => {
     const res = await api.post(endpoints.PLACES, place)
     return res.data;
 }
+
+export const deletePlace = async (id) => {
+    const res = await api.delete(`${endpoints.PLACES}/${id}`)
+
+    return res.data
+}

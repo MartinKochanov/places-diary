@@ -1,9 +1,19 @@
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity,
+    ActivityIndicator,
+    Alert,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { usePlace } from "../hooks/places/usePlace";
 import { useToggleFavouriteMutation } from "../hooks/places/useToggleFavouriteMutation";
+import { useDeletePlaceMutation } from "../hooks/places/useDeletePlaceMutation";
 
 export default function PlaceDetailsScreen() {
     const { params } = useRoute();
@@ -11,12 +21,32 @@ export default function PlaceDetailsScreen() {
 
     const { data: place, isLoading, error } = usePlace(placeId);
     const { mutateAsync: toggleFavouriteMutation } = useToggleFavouriteMutation();
+    const { mutateAsync: deletePlaceMutation } = useDeletePlaceMutation();
+    const navigation = useNavigation();
 
     const handleToggleFavourite = async () => {
         await toggleFavouriteMutation({
             id: place.id,
             isFavourite: !place.isFavourite,
         });
+    };
+
+    const handleDelete = () => {
+        Alert.alert(
+            "Delete place",
+            "Are you sure you want to delete this place?",
+            [
+                { text: "Cancel", style: "cancel" },
+                {
+                    text: "Delete",
+                    style: "destructive",
+                    onPress: async () => {
+                        await deletePlaceMutation(place.id);
+                        navigation.goBack();
+                    },
+                },
+            ]
+        );
     };
 
     if (isLoading) return <ActivityIndicator size="large" />;
@@ -28,18 +58,41 @@ export default function PlaceDetailsScreen() {
 
             <View style={styles.header}>
                 <Text style={styles.title}>{place.title}</Text>
-                <TouchableOpacity onPress={handleToggleFavourite}>
-                    <Ionicons
-                        name={place.isFavourite ? "heart" : "heart-outline"}
-                        size={28}
-                        color="tomato"
-                    />
-                </TouchableOpacity>
+
+                <View style={styles.actionsContainer}>
+                    <TouchableOpacity onPress={handleToggleFavourite}>
+                        <Ionicons
+                            name={place.isFavourite ? "heart" : "heart-outline"}
+                            size={26}
+                            color="tomato"
+                        />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Ionicons name="create-outline" size={26} color="#333" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={handleDelete}>
+                        <Ionicons name="trash-outline" size={26} color="crimson" />
+                    </TouchableOpacity>
+                </View>
             </View>
 
-            <Text style={styles.location}>
-                {place.city}, {place.country}
-            </Text>
+
+            <View style={styles.locationRow}>
+                <View>
+                    <Text style={styles.location}>
+                        {place.city}, {place.country}
+                    </Text>
+                </View>
+                <View style={styles.dateRow}>
+                    <Ionicons name="calendar-outline" size={16} color="#666" />
+                    <Text style={styles.dateText}>
+                        {new Date(place.dateVisited).toLocaleDateString()}
+                    </Text>
+                </View>
+            </View>
+
 
             <Text style={styles.notes}>{place.notes}</Text>
 
@@ -64,6 +117,7 @@ export default function PlaceDetailsScreen() {
     );
 }
 
+
 const styles = StyleSheet.create({
     image: {
         width: "100%",
@@ -73,7 +127,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
     },
     title: {
         fontSize: 22,
@@ -95,5 +150,21 @@ const styles = StyleSheet.create({
         height: 350,
         margin: 16,
         borderRadius: 12,
+    },
+    dateRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    dateText: {
+        color: "#666",
+        marginLeft: 4,
+    },
+    locationRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    actionsContainer: {
+        flexDirection: "row",
+        gap: 12,
     },
 });
