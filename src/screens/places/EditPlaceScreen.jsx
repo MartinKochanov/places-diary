@@ -14,8 +14,8 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { useEditPlaceMutation } from "../hooks/places/useEditPlaceMutation";
-import { useImagePicker } from "../hooks/image/useImagePicker";
+import { useEditPlaceMutation } from "../../hooks/places/useEditPlaceMutation";
+import { useImagePicker } from "../../hooks/image/useImagePicker";
 
 export default function EditPlaceScreen() {
     const { params } = useRoute();

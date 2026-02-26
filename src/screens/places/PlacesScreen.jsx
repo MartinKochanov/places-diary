@@ -1,8 +1,8 @@
 import { View, Text, FlatList, TextInput, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useCallback, useState } from "react";
-import { usePlaces } from "../hooks/places/usePlaces";
-import PlaceCard from "../components/PlaceCard";
-import CountryPicker from "../components/PlacesPicker";
+import { usePlaces } from "../../hooks/places/usePlaces";
+import PlaceCard from "../../components/PlaceCard";
+import CountryPicker from "../../components/PlacesPicker";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function PlacesScreen({ navigation }) {

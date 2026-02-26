@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import PlacesScreen from "../screens/PlacesScreen";
-import PlaceDetailsScreen from "../screens/PlaceDetailsScreen";
-import CreatePlaceScreen from "../screens/CreatePlaceScreen";
-import AddDetailsScreen from "../screens/AddDetailsScreen";
-import EditPlaceScreen from "../screens/EditPlaceScreen";
+import PlacesScreen from "../screens/places/PlacesScreen";
+import PlaceDetailsScreen from "../screens/places/PlaceDetailsScreen";
+import CreatePlaceScreen from "../screens/places/CreatePlaceScreen";
+import AddDetailsScreen from "../screens/places/AddDetailsScreen";
+import EditPlaceScreen from "../screens/places/EditPlaceScreen";
 
 const Stack = createNativeStackNavigator();
 

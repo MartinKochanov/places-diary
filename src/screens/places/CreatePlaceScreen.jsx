@@ -11,9 +11,9 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
 
-import { reverseGeocode } from "../api/locationService";
-import { useCurrentLocation } from "../hooks/locatoin/useCurrentLocation";
-import { usePlaceSearch } from "../hooks/locatoin/usePlacesSreach";
+import { reverseGeocode } from "../../api/locationService";
+import { useCurrentLocation } from "../../hooks/locatoin/useCurrentLocation";
+import { usePlaceSearch } from "../../hooks/locatoin/usePlacesSreach";
 
 export default function CreatePlaceScreen() {
     const navigation = useNavigation();

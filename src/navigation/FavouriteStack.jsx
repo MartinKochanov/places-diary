@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import FavouritePlacesScreen from "../screens/FavouritePlacesScreen";
-import PlaceDetailsScreen from "../screens/PlaceDetailsScreen";
-import EditPlaceScreen from "../screens/EditPlaceScreen";
+import FavouritePlacesScreen from "../screens/places/FavouritePlacesScreen";
+import PlaceDetailsScreen from "../screens/places/PlaceDetailsScreen";
+import EditPlaceScreen from "../screens/places/EditPlaceScreen";
 
 const Stack = createNativeStackNavigator();
 

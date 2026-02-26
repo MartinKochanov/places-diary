@@ -11,9 +11,9 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { usePlace } from "../hooks/places/usePlace";
-import { useToggleFavouriteMutation } from "../hooks/places/useToggleFavouriteMutation";
-import { useDeletePlaceMutation } from "../hooks/places/useDeletePlaceMutation";
+import { usePlace } from "../../hooks/places/usePlace";
+import { useToggleFavouriteMutation } from "../../hooks/places/useToggleFavouriteMutation";
+import { useDeletePlaceMutation } from "../../hooks/places/useDeletePlaceMutation";
 
 export default function PlaceDetailsScreen() {
     const { params } = useRoute();
