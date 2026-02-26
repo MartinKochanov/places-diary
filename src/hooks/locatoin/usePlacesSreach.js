@@ -1,4 +1,3 @@
-// src/hooks/usePlaceSearch.js
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { autocompletePlaces } from "../../api/locationService";

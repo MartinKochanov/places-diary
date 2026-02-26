@@ -1,4 +1,3 @@
-// components/LogoutButton.js
 import { TouchableOpacity, Text, Alert } from "react-native";
 import { useAuth } from "../context/AuthContext";
 
