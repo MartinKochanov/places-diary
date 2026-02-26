@@ -6,7 +6,7 @@ import AuthStack from "./AuthStack";
 import OnboardingStack from "./OnboardingStack";
 
 export default function RootNavigator() {
-    const { isAuthenticated, hasSeenOnboarding, isLoading } = useAuth();
+    const { isAuthenticated, isOnboarded, isLoading } = useAuth();
 
     if (isLoading) {
         return (
@@ -20,7 +20,7 @@ export default function RootNavigator() {
         <NavigationContainer>
             {!isAuthenticated ? (
                 <AuthStack />
-            ) : !hasSeenOnboarding ? (
+            ) : !isOnboarded ? (
                 <OnboardingStack />
             ) : (
                 <MainTabs />
