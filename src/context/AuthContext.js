@@ -7,11 +7,13 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
+    const [hasSeenOnboarding, setHasSeenOnboarding] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const restoreSession = async () => {
             const storedToken = await SecureStore.getItemAsync("token");
+            const onboarding = await SecureStore.getItemAsync("hasSeenOnboarding")
 
             if (storedToken) {
                 setToken(storedToken);
@@ -22,7 +24,7 @@ export function AuthProvider({ children }) {
                     await SecureStore.deleteItemAsync("token");
                 }
             }
-
+            setHasSeenOnboarding(onboarding === "true")
             setIsLoading(false);
         };
 
@@ -39,6 +41,11 @@ export function AuthProvider({ children }) {
         setUser(me);
     };
 
+    const completeOnboarding = async () => {
+        await SecureStore.setItemAsync("hasSeenOnboarding", "true")
+        setHasSeenOnboarding(true)
+    }
+
     const logout = async () => {
         await SecureStore.deleteItemAsync("token");
         setUser(null);
@@ -51,6 +58,8 @@ export function AuthProvider({ children }) {
                 user,
                 token,
                 isAuthenticated: !!token,
+                hasSeenOnboarding,
+                completeOnboarding,
                 isLoading,
                 login,
                 logout,
