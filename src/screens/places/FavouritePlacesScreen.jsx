@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import PlaceCard from "../../components/PlaceCard";
 import CountryPicker from "../../components/PlacesPicker";
 import { useFavouritePlaces } from "../../hooks/places/useFavouritePlaces";
+import EmptyState from "../../components/EmptyState";
 
 export default function FavouritePlacesScreen() {
     const [filter, setFilter] = useState("");
@@ -45,7 +46,14 @@ export default function FavouritePlacesScreen() {
                 data={places}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
-                ListEmptyComponent={<Text>No places found.</Text>}
+                ListEmptyComponent={
+                    <EmptyState
+                        title="No Favourite Places Found"
+                        message="You haven't added any favourite places yet."
+                        iconName="heart-outline"
+                        onRetry={refetch}
+                    />
+                }
                 refreshing={isFetching}
                 onRefresh={refetch}
                 onEndReached={() => {

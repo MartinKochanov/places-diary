@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import {
     View,
@@ -54,7 +53,6 @@ export default function RegisterScreen({ navigation }) {
                             Sign up to start saving your places
                         </Text>
 
-                        {/* First Name */}
                         <TextInput
                             placeholder="First name"
                             style={[styles.input, errors.firstName && styles.inputError]}
@@ -69,7 +67,6 @@ export default function RegisterScreen({ navigation }) {
                             <Text style={styles.error}>{errors.firstName.message}</Text>
                         )}
 
-                        {/* Last Name */}
                         <TextInput
                             placeholder="Last name"
                             style={[styles.input, errors.lastName && styles.inputError]}
@@ -84,7 +81,6 @@ export default function RegisterScreen({ navigation }) {
                             <Text style={styles.error}>{errors.lastName.message}</Text>
                         )}
 
-                        {/* Email */}
                         <TextInput
                             placeholder="Email"
                             autoCapitalize="none"
@@ -105,7 +101,6 @@ export default function RegisterScreen({ navigation }) {
                             <Text style={styles.error}>{errors.email.message}</Text>
                         )}
 
-                        {/* Password */}
                         <PasswordInput
                             error={errors.password?.message}
                             onChangeText={(v) => setValue("password", v, { shouldValidate: true })}
@@ -116,7 +111,6 @@ export default function RegisterScreen({ navigation }) {
                             <Text key={i} style={styles.error}>{msg}</Text>
                         ))}
 
-                        {/* Submit Button */}
                         <TouchableOpacity
                             onPress={handleSubmit(onSubmit)}
                             disabled={isPending}
@@ -132,17 +126,6 @@ export default function RegisterScreen({ navigation }) {
                                     Create account
                                 </Text>
                             )}
-                        </TouchableOpacity>
-
-                        {/* Login Redirect */}
-                        <TouchableOpacity
-                            style={styles.loginLink}
-                            onPress={() => navigation.navigate("Login")}
-                        >
-                            <Text style={styles.loginText}>
-                                Already have an account?{" "}
-                                <Text style={styles.loginBold}>Login</Text>
-                            </Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -201,18 +184,5 @@ const styles = StyleSheet.create({
     },
     disabledButton: {
         opacity: 0.6,
-    },
-    loginLink: {
-        marginTop: 24,
-        alignItems: "center",
-        paddingBottom: 20,
-    },
-    loginText: {
-        fontSize: 14,
-        color: "#555",
-    },
-    loginBold: {
-        fontWeight: "bold",
-        color: "teal",
-    },
+    }
 });

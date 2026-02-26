@@ -4,6 +4,7 @@ import { usePlaces } from "../../hooks/places/usePlaces";
 import PlaceCard from "../../components/PlaceCard";
 import CountryPicker from "../../components/PlacesPicker";
 import { Ionicons } from "@expo/vector-icons";
+import EmptyState from "../../components/EmptyState";
 
 export default function PlacesScreen({ navigation }) {
     const [filter, setFilter] = useState("");
@@ -52,12 +53,13 @@ export default function PlacesScreen({ navigation }) {
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
                 ListEmptyComponent={
-                    <View>
-                        <Text>No places found.</Text>
-                        <TouchableOpacity onPress={refetch}>
-                            <Text style={{ color: "blue", marginTop: 8 }}>Tap to retry</Text>
-                        </TouchableOpacity>
-                    </View>}
+                    <EmptyState
+                        title="No Places Found"
+                        message={filter ? `We couldn't find any places in ${filter}. Try a different location!` : "Start by adding your first place!"}
+                        iconName="search-outline"
+                        onRetry={refetch}
+                    />
+                }
                 refreshing={isFetching}
                 onRefresh={refetch}
                 onEndReached={() => {
