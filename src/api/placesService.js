@@ -51,8 +51,6 @@ export const toggleFavourite = async ({ id, isFavourite }) => {
     const res = await api.patch(`${endpoints.PLACES}/${id}`, {
         isFavourite: isFavourite,
     })
-    console.log(res.data);
-
     return res.data
 }
 

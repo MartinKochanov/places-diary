@@ -66,8 +66,6 @@ export default function AddDetailsScreen({ route, navigation }) {
             imageUrl,
             isFavourite: false,
         };
-        console.log(newPlace);
-
 
         try {
             await createPlace(newPlace);
