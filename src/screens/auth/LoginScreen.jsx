@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
+import PasswordInput from "../../components/PasswordInput";
 
 export default function LoginScreen() {
     const { login } = useAuth();
@@ -51,12 +52,9 @@ export default function LoginScreen() {
                     style={styles.input}
                 />
 
-                <TextInput
-                    placeholder="Password"
+                <PasswordInput
                     value={password}
                     onChangeText={setPassword}
-                    secureTextEntry
-                    style={styles.input}
                 />
 
                 <TouchableOpacity

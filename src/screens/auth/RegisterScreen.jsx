@@ -1,3 +1,4 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import {
     View,
@@ -8,9 +9,13 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     Platform,
+    ScrollView,
+    TouchableWithoutFeedback,
+    Keyboard,
 } from "react-native";
 import { useRegisterMutation } from "../../hooks/auth/useRegisterMutation";
 import { passwordRules } from "../../validation/passwordRules";
+import PasswordInput from "../../components/PasswordInput";
 
 export default function RegisterScreen({ navigation }) {
     const {
@@ -33,115 +38,124 @@ export default function RegisterScreen({ navigation }) {
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            style={{ flex: 1, backgroundColor: "#fff" }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
         >
-            <View style={styles.container}>
-                <Text style={styles.title}>Create account ✨</Text>
-                <Text style={styles.subtitle}>
-                    Sign up to start saving your places
-                </Text>
-
-                <TextInput
-                    placeholder="First name"
-                    style={[styles.input, errors.firstName && styles.inputError]}
-                    onChangeText={(v) =>
-                        setValue("firstName", v, { shouldValidate: true })
-                    }
-                    {...register("firstName", {
-                        required: "First name is required",
-                    })}
-                />
-                {errors.firstName && (
-                    <Text style={styles.error}>{errors.firstName.message}</Text>
-                )}
-
-                <TextInput
-                    placeholder="Last name"
-                    style={[styles.input, errors.lastName && styles.inputError]}
-                    onChangeText={(v) =>
-                        setValue("lastName", v, { shouldValidate: true })
-                    }
-                    {...register("lastName", {
-                        required: "Last name is required",
-                    })}
-                />
-                {errors.lastName && (
-                    <Text style={styles.error}>{errors.lastName.message}</Text>
-                )}
-
-                <TextInput
-                    placeholder="Email"
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                    style={[styles.input, errors.email && styles.inputError]}
-                    onChangeText={(v) =>
-                        setValue("email", v, { shouldValidate: true })
-                    }
-                    {...register("email", {
-                        required: "Email is required",
-                        pattern: {
-                            value: /^\S+@\S+\.\S+$/,
-                            message: "Invalid email address",
-                        },
-                    })}
-                />
-                {errors.email && (
-                    <Text style={styles.error}>{errors.email.message}</Text>
-                )}
-
-                <TextInput
-                    placeholder="Password"
-                    secureTextEntry
-                    style={[styles.input, errors.password && styles.inputError]}
-                    onChangeText={(v) =>
-                        setValue("password", v, { shouldValidate: true })
-                    }
-                    {...register("password", passwordRules)}
-                />
-
-                {errors.password &&
-                    Object.values(errors.password.types || {}).map(
-                        (msg, i) => (
-                            <Text key={i} style={styles.error}>
-                                {msg}
-                            </Text>
-                        )
-                    )}
-
-                <TouchableOpacity
-                    onPress={handleSubmit(onSubmit)}
-                    disabled={isPending}
-                    style={[
-                        styles.registerButton,
-                        isPending && styles.disabledButton,
-                    ]}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <ScrollView
+                    contentContainerStyle={styles.scrollContainer}
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
                 >
-                    {isPending ? (
-                        <ActivityIndicator color="#fff" />
-                    ) : (
-                        <Text style={styles.registerButtonText}>
-                            Create account
+                    <View style={styles.innerContainer}>
+                        <Text style={styles.title}>Create account ✨</Text>
+                        <Text style={styles.subtitle}>
+                            Sign up to start saving your places
                         </Text>
-                    )}
-                </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.loginLink}
-                    onPress={() => navigation.navigate("Login")}
-                >
-                    <Text style={styles.loginText}>
-                        Already have an account?{" "}
-                        <Text style={styles.loginBold}>Login</Text>
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                        {/* First Name */}
+                        <TextInput
+                            placeholder="First name"
+                            style={[styles.input, errors.firstName && styles.inputError]}
+                            onChangeText={(v) =>
+                                setValue("firstName", v, { shouldValidate: true })
+                            }
+                            {...register("firstName", {
+                                required: "First name is required",
+                            })}
+                        />
+                        {errors.firstName && (
+                            <Text style={styles.error}>{errors.firstName.message}</Text>
+                        )}
+
+                        {/* Last Name */}
+                        <TextInput
+                            placeholder="Last name"
+                            style={[styles.input, errors.lastName && styles.inputError]}
+                            onChangeText={(v) =>
+                                setValue("lastName", v, { shouldValidate: true })
+                            }
+                            {...register("lastName", {
+                                required: "Last name is required",
+                            })}
+                        />
+                        {errors.lastName && (
+                            <Text style={styles.error}>{errors.lastName.message}</Text>
+                        )}
+
+                        {/* Email */}
+                        <TextInput
+                            placeholder="Email"
+                            autoCapitalize="none"
+                            keyboardType="email-address"
+                            style={[styles.input, errors.email && styles.inputError]}
+                            onChangeText={(v) =>
+                                setValue("email", v, { shouldValidate: true })
+                            }
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^\S+@\S+\.\S+$/,
+                                    message: "Invalid email address",
+                                },
+                            })}
+                        />
+                        {errors.email && (
+                            <Text style={styles.error}>{errors.email.message}</Text>
+                        )}
+
+                        {/* Password */}
+                        <PasswordInput
+                            error={errors.password?.message}
+                            onChangeText={(v) => setValue("password", v, { shouldValidate: true })}
+                            {...register("password", passwordRules)}
+                        />
+
+                        {errors.password?.types && Object.values(errors.password.types).map((msg, i) => (
+                            <Text key={i} style={styles.error}>{msg}</Text>
+                        ))}
+
+                        {/* Submit Button */}
+                        <TouchableOpacity
+                            onPress={handleSubmit(onSubmit)}
+                            disabled={isPending}
+                            style={[
+                                styles.registerButton,
+                                isPending && styles.disabledButton,
+                            ]}
+                        >
+                            {isPending ? (
+                                <ActivityIndicator color="#fff" />
+                            ) : (
+                                <Text style={styles.registerButtonText}>
+                                    Create account
+                                </Text>
+                            )}
+                        </TouchableOpacity>
+
+                        {/* Login Redirect */}
+                        <TouchableOpacity
+                            style={styles.loginLink}
+                            onPress={() => navigation.navigate("Login")}
+                        >
+                            <Text style={styles.loginText}>
+                                Already have an account?{" "}
+                                <Text style={styles.loginBold}>Login</Text>
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    scrollContainer: {
+        flexGrow: 1,
+    },
+    innerContainer: {
         flex: 1,
         padding: 24,
         justifyContent: "center",
@@ -163,6 +177,7 @@ const styles = StyleSheet.create({
         padding: 14,
         marginBottom: 12,
         fontSize: 16,
+        backgroundColor: "#fff",
     },
     inputError: {
         borderColor: "red",
@@ -190,6 +205,7 @@ const styles = StyleSheet.create({
     loginLink: {
         marginTop: 24,
         alignItems: "center",
+        paddingBottom: 20,
     },
     loginText: {
         fontSize: 14,
