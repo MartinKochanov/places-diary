@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 
 export default function PlacesStack() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen
                 name="PlacesList"
                 component={PlacesScreen}

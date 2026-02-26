@@ -3,12 +3,13 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import PlacesStack from "./PlacesStack";
 import FavouritesStack from "./FavouriteStack";
 import { Ionicons } from "@expo/vector-icons";
+import LogoutButton from "../components/LogoutButton";
 
 const Tab = createBottomTabNavigator();
 
 export default function MainTabs() {
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Navigator screenOptions={{ headerRight: () => <LogoutButton /> }}>
             <Tab.Screen
                 name="PlacesTab"
                 component={PlacesStack}

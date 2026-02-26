@@ -51,7 +51,13 @@ export default function PlacesScreen({ navigation }) {
                 data={places}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
-                ListEmptyComponent={<Text>No places found.</Text>}
+                ListEmptyComponent={
+                    <View>
+                        <Text>No places found.</Text>
+                        <TouchableOpacity onPress={refetch}>
+                            <Text style={{ color: "blue", marginTop: 8 }}>Tap to retry</Text>
+                        </TouchableOpacity>
+                    </View>}
                 refreshing={isFetching}
                 onRefresh={refetch}
                 onEndReached={() => {
