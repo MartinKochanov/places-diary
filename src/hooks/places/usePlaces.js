@@ -2,17 +2,18 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import { getPlaces } from "../../api/placesService"
 
 
-const PER_PAGE = 10;
+const PER_PAGE = 99999999;
 
 export const usePlaces = (country) => {
     return useInfiniteQuery({
         queryKey: ["places", country],
-        queryFn: ({ pageParam = 1 }) =>
-            getPlaces(pageParam, PER_PAGE, country),
-
-        getNextPageParam: (lastPage, allPages) => {
-            if (lastPage.length < PER_PAGE) return undefined;
-            return allPages.length + 1;
+        queryFn: async ({ pageParam = 0 }) => {
+            const res = await getPlaces(pageParam, PER_PAGE, country);
+            return res;
+        },
+        getNextPageParam: (lastPage) => {
+            if (!lastPage || lastPage.last) return undefined;
+            return lastPage.number + 1;
         },
     });
 };

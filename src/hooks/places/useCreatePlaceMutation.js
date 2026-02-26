@@ -8,6 +8,7 @@ export const useCreatePlaceMutation = () => {
         mutationFn: addPlace,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['places'] })
+            queryClient.invalidateQueries({ queryKey: ['countries'] })
         }
     })
 }

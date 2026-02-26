@@ -28,11 +28,12 @@ export default function PlacesScreen({ navigation }) {
         return (
             <View style={{ justifyContent: "center", alignItems: "center", padding: 16 }}>
                 <Text>Something went wrong while loading places.</Text>
+                <Text onPress={refetch} style={{ color: "blue", marginTop: 8 }}>Tap to retry</Text>
             </View>
         );
     }
 
-    const places = data?.pages.flat() ?? [];
+    const places = data?.pages?.flatMap(page => page?.content ?? []) ?? [];
 
     return (
         <View style={{ padding: 16, marginBottom: 60 }}>

@@ -7,38 +7,34 @@ export const addPlace = async (place) => {
     return res.data;
 }
 
-export const getPlaces = async (page = 1, perPage = 10, country = "") => {
-    const res = await api.get(`${endpoints.PLACES}?_sort=-dateVisited,-id`, {
+export const getPlaces = async (page = 0, perPage = 99999999, country = "") => {
+    const res = await api.get(`${endpoints.PLACES}`, {
         params: {
-            _page: page,
-            _per_page: perPage,
+            page: page,
+            size: perPage,
             country: country
         },
     });
 
-    return res.data.data;
+    return res.data;
 };
 
 export const getFavouritePlaces = async (page = 1, perPage = 10, country = "") => {
     const res = await api.get(`${endpoints.PLACES}?_sort=-dateVisited,-id`, {
         params: {
-            _page: page,
-            _per_page: perPage,
+            page: page,
+            size: perPage,
             isFavourite: true,
             country: country,
         },
     });
 
-    return res.data.data;
+    return res.data;
 };
 
 export const getCountries = async () => {
-    const res = await api.get(endpoints.PLACES);
-    const result = res.data;
-
-    return Array.from(
-        new Set(result.map((p) => p.country).filter(Boolean))
-    );
+    const res = await api.get(endpoints.COUNTRIES);
+    return res.data;
 };
 
 export const getPlaceById = async (id) => {
@@ -53,9 +49,11 @@ export const editPlace = async (id, data) => {
 
 export const toggleFavourite = async ({ id, isFavourite }) => {
     const res = await api.patch(`${endpoints.PLACES}/${id}`, {
-        isFavourite,
+        isFavourite: isFavourite,
     })
-    return res.data;
+    console.log(res.data);
+
+    return res.data
 }
 
 export const deletePlace = async (id) => {

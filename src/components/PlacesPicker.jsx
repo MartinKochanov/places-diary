@@ -8,6 +8,7 @@ export default function CountryPicker({ selectedValue, onValueChange }) {
         data: countries = [],
         isLoading,
         error,
+        refetch,
     } = useCountries();
 
     if (isLoading) return <ActivityIndicator size="small" />;
@@ -15,6 +16,7 @@ export default function CountryPicker({ selectedValue, onValueChange }) {
         return (
             <View style={{ justifyContent: "center", alignItems: "center", padding: 16 }}>
                 <Text>Something went wrong while loading countries.</Text>
+                <Text onPress={refetch} style={{ color: "blue", marginTop: 8 }}>Tap to retry</Text>
             </View>
         );
     }
