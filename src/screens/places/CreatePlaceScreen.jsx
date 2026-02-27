@@ -100,6 +100,7 @@ export default function CreatePlaceScreen() {
                 value={query}
                 onChangeText={handleSearchChange}
                 style={styles.input}
+                placeholderTextColor={"#999"}
             />
 
             {loading && <ActivityIndicator size="small" />}

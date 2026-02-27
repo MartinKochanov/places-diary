@@ -55,6 +55,7 @@ export default function RegisterScreen({ navigation }) {
 
                         <TextInput
                             placeholder="First name"
+                            placeholderTextColor={"#999"}
                             style={[styles.input, errors.firstName && styles.inputError]}
                             onChangeText={(v) =>
                                 setValue("firstName", v, { shouldValidate: true })
@@ -69,6 +70,7 @@ export default function RegisterScreen({ navigation }) {
 
                         <TextInput
                             placeholder="Last name"
+                            placeholderTextColor={"#999"}
                             style={[styles.input, errors.lastName && styles.inputError]}
                             onChangeText={(v) =>
                                 setValue("lastName", v, { shouldValidate: true })
@@ -85,6 +87,7 @@ export default function RegisterScreen({ navigation }) {
                             placeholder="Email"
                             autoCapitalize="none"
                             keyboardType="email-address"
+                            placeholderTextColor={"#999"}
                             style={[styles.input, errors.email && styles.inputError]}
                             onChangeText={(v) =>
                                 setValue("email", v, { shouldValidate: true })

@@ -47,6 +47,7 @@ export default function LoginScreen() {
                     placeholder="Email"
                     value={email}
                     onChangeText={setEmail}
+                    placeholderTextColor={"#999"}
                     autoCapitalize="none"
                     keyboardType="email-address"
                     style={styles.input}

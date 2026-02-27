@@ -26,6 +26,7 @@ export default function CountryPicker({ selectedValue, onValueChange }) {
             selectedValue={selectedValue}
             onValueChange={onValueChange}
             style={styles.picker}
+            dropdownIconColor={"#000"}
         >
             <Picker.Item label="All countries" value="" />
             {countries.map((country) => (
@@ -50,5 +51,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#ccc",
         width: "50%",
+        color: "#000",
     },
 });

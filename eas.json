@@ -11,6 +11,9 @@
     "preview": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_LOCATIONIQ_API_KEY": "LOCATIONIQ_API_KEY"
       }
     },
     "production": {}
