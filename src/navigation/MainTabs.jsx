@@ -9,7 +9,9 @@ const Tab = createBottomTabNavigator();
 
 export default function MainTabs() {
     return (
-        <Tab.Navigator screenOptions={{ headerRight: () => <LogoutButton /> }}>
+        <Tab.Navigator screenOptions={{
+            headerShown: false,
+        }}>
             <Tab.Screen
                 name="PlacesTab"
                 component={PlacesStack}

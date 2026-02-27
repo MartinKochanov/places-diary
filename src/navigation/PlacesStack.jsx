@@ -4,16 +4,17 @@ import PlaceDetailsScreen from "../screens/places/PlaceDetailsScreen";
 import CreatePlaceScreen from "../screens/places/CreatePlaceScreen";
 import AddDetailsScreen from "../screens/places/AddDetailsScreen";
 import EditPlaceScreen from "../screens/places/EditPlaceScreen";
+import LogoutButton from "../components/LogoutButton";
 
 const Stack = createNativeStackNavigator();
 
 export default function PlacesStack() {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator >
             <Stack.Screen
                 name="PlacesList"
                 component={PlacesScreen}
-                options={{ title: "Places" }}
+                options={{ title: "Places", headerRight: () => <LogoutButton /> }}
             />
 
             <Stack.Screen
