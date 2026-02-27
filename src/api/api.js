@@ -1,9 +1,8 @@
 import axios from "axios"
 import * as SecureStore from "expo-secure-store"
 
-const LOCAL_IP = process.env.EXPO_PUBLIC_LOCAL_IP
 const api = axios.create({
-    baseURL: `http://${LOCAL_IP}:8080/api/v1`,
+    baseURL: `https://placec-diary-be.onrender.com/api/v1/`,
     headers: {
         "Content-Type": "application/json",
     },
