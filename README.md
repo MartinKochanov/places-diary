@@ -88,12 +88,5 @@ User sessions are managed via **React Context**, ensuring the app knows your aut
 
 ---
 
-## 🖼️ Screenshots / GIFs
-> *Add your visual assets here to showcase the UI*
-
-![Onboarding Example](https://via.placeholder.com/300x600?text=Onboarding+GIF+Placeholder)
-
----
-
 ## 👨‍💻 Author
 **Martin Kochanov** – Software University – 2026
