@@ -11,7 +11,7 @@ A feature-rich **React Native** application built with **Expo** to track, explor
 * **Forms:** React Hook Form
 * **State Management:** React Context + React Query (TanStack)
 * **Storage:** Expo SecureStore (JWT & user data persistence)
-* **Media:** `react-native-fast-image` (GIF & high-performance image support)
+* **Media:** `lottie-react-native` (GIF support)
 
 ---
 
