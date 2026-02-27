@@ -1,157 +1,99 @@
-A React Native app to track, explore, and manage your favorite places. Includes authentication, favorites, place creation, and onboarding screens for first-time users.
+# 📱 Place Diary Mobile
 
-Features
+## Overview
+A feature-rich **React Native** application built with **Expo** to track, explore, and manage your favorite places. This frontend integrates seamlessly with the Place Diary Backend to provide a secure, persistent, and visually engaging user experience.
 
-Authentication
+---
 
-Register new users
+## ⚙️ Tech Stack
+* **Framework:** React Native + Expo
+* **Navigation:** React Navigation (Stack + Tabs)
+* **Forms:** React Hook Form
+* **State Management:** React Context + React Query (TanStack)
+* **Storage:** Expo SecureStore (JWT & user data persistence)
+* **Media:** `react-native-fast-image` (GIF & high-performance image support)
 
-Login / logout
+---
 
-JWT token saved securely using Expo SecureStore
+## 📦 Features
 
-Onboarding
+### 🔐 Authentication
+* **Onboarding:** 3-screen walkthrough with interactive GIFs and illustrations (shown only on first-time login).
+* **Identity:** Full Register, Login, and Logout flows.
+* **Security:** JWT tokens are stored securely using **Expo SecureStore**.
 
-3 onboarding screens with GIFs and illustrations
+### 📍 Places Management
+* **Browse:** View all saved locations in a clean, list-based UI.
+* **Create:** Add new places with titles, custom notes, visited dates, and photos.
+* **Modify:** Full Edit and Delete capabilities for existing entries.
 
-Only shown on the first login
+### ❤️ Favorites
+* **Quick Save:** One-tap marking of places as favorites.
+* **Filtered View:** Dedicated favorites list for your top-tier locations.
 
-Places
+---
 
-Browse all saved places
+## 📱 Screens Reference
 
-Add new places with title, notes, visited date, and photo
+| Group | Screens |
+| :--- | :--- |
+| **Onboarding** | Welcome, Browse & Favorites, Create & Explore |
+| **Authentication** | Login, Register |
+| **Main App** | Places List, Place Details, Favorites List |
+| **Creation Flow** | Create Place, Add Details, Edit Place |
 
-Edit or delete places
+---
 
-Favorites
+## 🚀 Installation & Setup
 
-Mark places as favorite
+### Prerequisites
+* **Node.js** (LTS version)
+* **Expo Go** app installed on your physical device (iOS/Android) or an Emulator.
 
-View a separate favorites list
+### Steps
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/yourusername/places-diary.git](https://github.com/yourusername/places-diary.git)
+    cd places-diary
+    ```
 
-Screens
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-Onboarding Screens
+3.  **Configure API Endpoint:**
+    Update your configuration file (e.g., `api.js` or `.env`) to point to your deployed backend URL.
 
-Welcome
+4.  **Start the Expo app:**
+    ```bash
+    npx expo start
+    ```
 
-Browse & Favorites
+5.  **Run on your device:**
+    * Scan the QR code in the terminal using the **Expo Go** app.
+    * Press `i` for iOS simulator or `a` for Android emulator.
 
-Create & Explore
+---
 
-Authentication Screens
+## 💡 Usage & Logic
 
-Login
+### Onboarding Flow
+The app uses a `hasSeenOnboarding` flag stored in **SecureStore**. 
+* **New Users:** Guided through the Welcome, Browse, and Create walkthroughs.
+* **Returning Users:** Directed straight to the Login/Main screen.
 
-Register
+### State Persistence
+User sessions are managed via **React Context**, ensuring the app knows your authentication status immediately upon launch without flickering.
 
-Main App Screens
+---
 
-Places List
+## 🖼️ Screenshots / GIFs
+> *Add your visual assets here to showcase the UI*
 
-Place Details
+![Onboarding Example](https://via.placeholder.com/300x600?text=Onboarding+GIF+Placeholder)
 
-Create Place
+---
 
-Add Details
-
-Edit Place
-
-Favorites List
-
-Tech Stack
-
-Frontend: React Native + Expo
-
-Navigation: React Navigation (Stack + Tabs)
-
-Forms: React Hook Form
-
-State Management: React Context + React Query (TanStack)
-
-Storage: Expo SecureStore (JWT & user data)
-
-GIF Support: react-native-fast-image
-
-Backend: Your own deployed REST API
-
-Installation
-
-Clone the repository:
-
-git clone https://github.com/yourusername/places-diary.git
-cd places-diary
-
-Install dependencies:
-
-npm install
-
-Start the Expo app:
-
-npx expo start
-
-Run on your device or simulator:
-
-Scan the QR code in Expo Go
-
-Or select iOS/Android simulator
-
-Usage
-
-On first launch
-
-Onboarding screens appear with GIFs explaining features.
-
-Register/Login
-
-Register a new account or login.
-
-Places
-
-Browse places, mark favorites, create new ones.
-
-Logout
-
-Tap logout in the header of the main tabs.
-
-Onboarding Logic
-
-Onboarding screens are shown only once per user.
-
-Completion is tracked in SecureStore or context (hasSeenOnboarding flag).
-
-Users can navigate using Next/Get Started buttons.
-
-Folder Structure
-/src
- ├─ /screens
- │   ├─ Onboarding1.js
- │   ├─ Onboarding2.js
- │   ├─ Onboarding3.js
- │   ├─ LoginScreen.js
- │   ├─ RegisterScreen.js
- │   ├─ PlacesScreen.js
- │   └─ ...
- ├─ /context
- │   └─ AuthContext.js
- ├─ /hooks
- │   ├─ places/
- │   └─ auth/
- ├─ /navigation
- │   ├─ MainTabs.js
- │   ├─ PlacesStack.js
- │   └─ ...
- └─ /validation
-     └─ passwordRules.js
-Screenshots / GIFs
-
-You can include your onboarding GIFs and screenshots here:
-
-Onboarding GIF example:
-
-Notes
-
-JWT token is stored securely in Expo SecureStore.
-
-Designed for seamless integration with your deployed backend.
+## 👨‍💻 Author
+**Martin Kochanov** – Software University – 2026
