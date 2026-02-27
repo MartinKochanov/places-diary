@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F0F4F8"
     },
     "ios": {
       "supportsTablet": true,
@@ -28,9 +28,11 @@
       },
       "edgeToEdgeEnabled": true,
       "permissions": [
-        "ACCESS_FINE_LOCATION",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_COARSE_LOCATION"
       ]
     },
     "web": {
@@ -50,6 +52,11 @@
           "locationWhenInUsePermission": "The app needs your location to mark places you have visited on the map."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "28880fca-ee5a-4a6a-bc42-04aa079c200b"
+      }
+    }
   }
 }
