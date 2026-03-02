@@ -53,10 +53,6 @@ export default function EditPlaceScreen() {
                 "Date cannot be in the future";
         }
 
-        if (!imageUrl) {
-            newErrors.imageUrl = "Photo is required";
-        }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };

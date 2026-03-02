@@ -173,9 +173,6 @@ The application uses a custom REST API backend deployed on Render.com:
 **Date Visited field (Add/Edit Place Form):**
 - Cannot be in the future – "Date cannot be in the future"
 
-**Photo field (Add/Edit Place Form):**
-- Required: "Photo is required"
-
 ---
 
 ## 9. Native Device Features
