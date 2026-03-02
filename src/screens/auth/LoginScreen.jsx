@@ -8,6 +8,9 @@ import {
     Alert,
     KeyboardAvoidingView,
     Platform,
+    ScrollView,
+    TouchableWithoutFeedback,
+    Keyboard,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
@@ -34,59 +37,71 @@ export default function LoginScreen() {
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            style={{ flex: 1, backgroundColor: "#fff" }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
         >
-            <View style={styles.container}>
-                <Text style={styles.title}>Welcome back 👋</Text>
-                <Text style={styles.subtitle}>
-                    Login to continue exploring places
-                </Text>
-
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholderTextColor={"#999"}
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                    style={styles.input}
-                />
-
-                <PasswordInput
-                    value={password}
-                    onChangeText={setPassword}
-                />
-
-                <TouchableOpacity
-                    style={[
-                        styles.loginButton,
-                        loading && styles.disabledButton,
-                    ]}
-                    onPress={handleLogin}
-                    disabled={loading}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <ScrollView
+                    contentContainerStyle={styles.scrollContainer}
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
                 >
-                    <Text style={styles.loginButtonText}>
-                        {loading ? "Logging in..." : "Login"}
-                    </Text>
-                </TouchableOpacity>
+                    <View style={styles.innerContainer}>
+                        <Text style={styles.title}>Welcome back 👋</Text>
+                        <Text style={styles.subtitle}>
+                            Login to continue exploring places
+                        </Text>
 
-                <TouchableOpacity
-                    onPress={() => navigation.navigate("Register")}
-                    style={styles.registerLink}
-                >
-                    <Text style={styles.registerText}>
-                        Don’t have an account?{" "}
-                        <Text style={styles.registerBold}>Register</Text>
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                        <TextInput
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={setEmail}
+                            placeholderTextColor={"#999"}
+                            autoCapitalize="none"
+                            keyboardType="email-address"
+                            style={styles.input}
+                        />
+
+                        <PasswordInput
+                            value={password}
+                            onChangeText={setPassword}
+                        />
+
+                        <TouchableOpacity
+                            style={[
+                                styles.loginButton,
+                                loading && styles.disabledButton,
+                            ]}
+                            onPress={handleLogin}
+                            disabled={loading}
+                        >
+                            <Text style={styles.loginButtonText}>
+                                {loading ? "Logging in..." : "Login"}
+                            </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("Register")}
+                            style={styles.registerLink}
+                        >
+                            <Text style={styles.registerText}>
+                                Don't have an account?{" "}
+                                <Text style={styles.registerBold}>Register</Text>
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    scrollContainer: {
+        flexGrow: 1,
+    },
+    innerContainer: {
         flex: 1,
         padding: 24,
         justifyContent: "center",

@@ -190,7 +190,7 @@ export default function EditPlaceScreen() {
     );
 }
 const styles = StyleSheet.create({
-    container: { flex: 1, paddingHorizontal: 16 },
+    container: { paddingHorizontal: 16, paddingBottom: 40 },
     title: { fontSize: 20, fontWeight: "bold", marginBottom: 16 },
     label: { fontWeight: "bold", marginTop: 16 },
     input: {
