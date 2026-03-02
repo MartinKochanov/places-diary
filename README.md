@@ -6,7 +6,7 @@
 
 **Application Category / Topic:** Travel
 
-**Link to the application apk: https://drive.google.com/file/d/1gG0a-U1VMvs9wo6TEvn_doSGbGCEtBRy/view?usp=sharing
+**Link to the android apk file:** https://drive.google.com/file/d/1gG0a-U1VMvs9wo6TEvn_doSGbGCEtBRy/view?usp=sharing
 
 **Main Purpose:**
 Place Diary is a mobile application that allows users to track, explore, and manage their favorite places they have visited. Users can save locations with photos, notes, and visit dates, mark places as favorites, and view them on an interactive map. The app helps users create a personal diary of memorable locations.
